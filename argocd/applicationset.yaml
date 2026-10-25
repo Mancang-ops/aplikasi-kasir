@@ -11,7 +11,7 @@ spec:
   generators:
     - list:
         elements:
-          - {env: dev,  autoSync: true,  prune: false}
+          - {env: dev,  autoSync: true,  prune: true}
           - {env: prod, autoSync: false, prune: false}
   template:
     metadata:
