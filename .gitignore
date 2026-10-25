@@ -1,0 +1,8 @@
+# never commit cluster access or secrets in plain text (SealedSecrets are fine)
+kubeconfig*
+*.kubeconfig
+*.pem
+*.key
+*-unsealed.yaml
+secret-*.yaml
+.DS_Store

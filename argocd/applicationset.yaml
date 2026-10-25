@@ -1,0 +1,40 @@
+# One ApplicationSet -> kasir-dev and kasir-prod.
+# dev syncs automatically; prod is a manual promotion (click Sync / argocd app sync).
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: kasir
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - list:
+        elements:
+          - {env: dev,  autoSync: true,  prune: false}
+          - {env: prod, autoSync: false, prune: false}
+  template:
+    metadata:
+      name: 'kasir-{{.env}}'
+      labels: {app: kasir, env: '{{.env}}'}
+    spec:
+      project: gitops-lab
+      source:
+        repoURL: https://github.com/rudiyanto-anteraja/gitops-argocd-lab.git
+        targetRevision: main
+        path: 'apps/kasir/overlays/{{.env}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: 'kasir-{{.env}}'
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+          - PruneLast=true
+  templatePatch: |
+    {{- if .autoSync }}
+    spec:
+      syncPolicy:
+        automated:
+          prune: {{ .prune }}
+          selfHeal: true
+    {{- end }}

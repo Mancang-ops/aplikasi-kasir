@@ -1,0 +1,6 @@
+apiVersion: v2
+name: nginx-helm
+description: Static "status board" page served by nginx; the Helm demo app of the GitOps lab
+type: application
+version: 0.1.0
+appVersion: "1.30.6"

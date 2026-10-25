@@ -1,0 +1,25 @@
+# Restricts what the lab apps may deploy: only this repo, only the lab namespaces
+# on the local cluster, and the only cluster-scoped kind allowed is Namespace.
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: gitops-lab
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: GitOps lab workloads (kasir + nginx-helm)
+  sourceRepos:
+    - https://github.com/rudiyanto-anteraja/gitops-argocd-lab.git
+  destinations:
+    - {server: https://kubernetes.default.svc, namespace: kasir-dev}
+    - {server: https://kubernetes.default.svc, namespace: kasir-prod}
+    - {server: https://kubernetes.default.svc, namespace: nginx-dev}
+    - {server: https://kubernetes.default.svc, namespace: nginx-prod}
+  clusterResourceWhitelist:
+    - {group: "", kind: Namespace}
+  namespaceResourceBlacklist:
+    - {group: "", kind: ResourceQuota}
+    - {group: "", kind: LimitRange}
+  orphanedResources:
+    warn: true

@@ -1,0 +1,7 @@
+# Used in exercise 7 (prune): delete this file from git and watch what Argo CD does.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kasir-feature-flags
+data:
+  NEW_RECEIPT_LAYOUT: "true"

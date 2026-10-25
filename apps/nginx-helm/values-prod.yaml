@@ -1,0 +1,6 @@
+replicaCount: 2
+environment: prod
+message: Helm values-prod.yaml
+color: "#1d6b45"
+ingress:
+  host: nginx-prod.localtest.me

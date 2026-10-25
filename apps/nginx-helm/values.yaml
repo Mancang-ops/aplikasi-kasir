@@ -1,0 +1,15 @@
+replicaCount: 1
+image:
+  repository: docker.io/nginxinc/nginx-unprivileged
+  tag: 1.30.6-alpine
+  pullPolicy: IfNotPresent
+environment: base
+message: Deployed by Argo CD from Helm
+color: "#1d6b45"
+ingress:
+  enabled: true
+  className: traefik
+  host: nginx.localtest.me
+resources:
+  requests: {cpu: 10m, memory: 16Mi}
+  limits: {memory: 64Mi}

@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kasir
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {}
+  template:
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile: {type: RuntimeDefault}
+      containers:
+        - name: kasir
+          image: localhost:5050/kasir:1.0.0   # tag is set per overlay
+          ports:
+            - {name: http, containerPort: 8080}
+          envFrom:
+            - secretRef:
+                name: kasir-cloud     # from a SealedSecret (dev only); optional elsewhere
+                optional: true
+          readinessProbe:
+            httpGet: {path: /healthz, port: http}
+            periodSeconds: 5
+          livenessProbe:
+            httpGet: {path: /healthz, port: http}
+            periodSeconds: 20
+          resources:
+            requests: {cpu: 10m, memory: 16Mi}
+            limits: {memory: 64Mi}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities: {drop: [ALL]}

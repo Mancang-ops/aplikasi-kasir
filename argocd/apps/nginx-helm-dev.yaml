@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nginx-helm-dev
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: gitops-lab
+  source:
+    repoURL: https://github.com/rudiyanto-anteraja/gitops-argocd-lab.git
+    targetRevision: main
+    path: apps/nginx-helm
+    helm:
+      releaseName: nginx-helm
+      valueFiles:
+        - values-dev.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: nginx-dev
+  syncPolicy:
+    automated: {prune: true, selfHeal: true}
+    syncOptions:
+      - CreateNamespace=true

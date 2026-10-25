@@ -1,0 +1,5 @@
+environment: dev
+message: Helm values-dev.yaml
+color: "#f0b357"
+ingress:
+  host: nginx-dev.localtest.me

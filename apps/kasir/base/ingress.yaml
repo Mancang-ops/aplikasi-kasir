@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kasir
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: kasir.localtest.me        # patched per overlay
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service: {name: kasir, port: {name: http}}
