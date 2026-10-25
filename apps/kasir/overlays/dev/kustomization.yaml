@@ -3,7 +3,6 @@ kind: Kustomization
 namespace: kasir-dev
 resources:
   - ../../base
-  - feature-flags.yaml
   - sealedsecret-kasir-cloud.yaml
 images:
   - name: localhost:5050/kasir
