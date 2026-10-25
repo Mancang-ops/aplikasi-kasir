@@ -10,7 +10,7 @@ metadata:
 spec:
   description: GitOps lab workloads (kasir + nginx-helm)
   sourceRepos:
-    - https://github.com/rudiyanto-anteraja/gitops-argocd-lab.git
+    - https://github.com/Mancang-ops/aplikasi-kasir.git
   destinations:
     - {server: https://kubernetes.default.svc, namespace: kasir-dev}
     - {server: https://kubernetes.default.svc, namespace: kasir-prod}

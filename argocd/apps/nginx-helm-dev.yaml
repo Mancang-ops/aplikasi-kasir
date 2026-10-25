@@ -8,7 +8,7 @@ metadata:
 spec:
   project: gitops-lab
   source:
-    repoURL: https://github.com/rudiyanto-anteraja/gitops-argocd-lab.git
+    repoURL: https://github.com/Mancang-ops/aplikasi-kasir.git
     targetRevision: main
     path: apps/nginx-helm
     helm:
