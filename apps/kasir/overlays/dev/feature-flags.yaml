@@ -3,5 +3,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: kasir-feature-flags
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 data:
   NEW_RECEIPT_LAYOUT: "true"
