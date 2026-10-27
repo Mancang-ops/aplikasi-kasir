@@ -9,3 +9,5 @@ resources:
   - deployment.yaml
   - service.yaml
   - ingress.yaml
+  - presync-db-migrate.yaml
+  - postsync-smoke-test.yaml

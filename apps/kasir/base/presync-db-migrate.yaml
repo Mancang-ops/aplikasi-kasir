@@ -1,0 +1,21 @@
+# PreSync hook: runs before any manifest is applied. A real app would run DB
+# migrations here; if the Job fails, the sync stops and nothing is rolled out.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: kasir-db-migrate
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation   # keep last run for `kubectl logs`
+spec:
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 3600
+  template:
+    spec:
+      restartPolicy: Never
+      securityContext: {runAsNonRoot: true, runAsUser: 65534, seccompProfile: {type: RuntimeDefault}}
+      containers:
+        - name: migrate
+          image: docker.io/library/busybox:1.38.0
+          command: ["sh", "-c", "echo \"[$(date -u +%T)] migrating kasir schema...\"; sleep 5; echo done"]
+          securityContext: {allowPrivilegeEscalation: false, capabilities: {drop: [ALL]}}
