@@ -6,7 +6,7 @@ resources:
   - feature-flags.yaml
 images:
   - name: localhost:5050/kasir
-    newTag: "1.0.0"
+    newTag: "1.1.0"
 replicas:
   - name: kasir
     count: 1
